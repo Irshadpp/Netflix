@@ -1,9 +1,15 @@
-
-import './App.css'
+import "./index.css"
+import Banner from './components/Banner'
+import Navbar from './components/Navbar'
+import Card from "./components/Card"
 
 function App() {
   return (
-    <div>app</div>
+    <div>
+      <Navbar/>
+      <Banner/>
+      <Card/>
+    </div>
   )
 }
 
