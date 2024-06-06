@@ -10,7 +10,6 @@ const endpoints = {
 }
 
 export const createImageUrl = (filename, size) =>{
-    console.log(`https://image.tmdb.org/t/p/${size}/${filename}`)
     return `https://image.tmdb.org/t/p/${size}/${filename}`
 }
 
