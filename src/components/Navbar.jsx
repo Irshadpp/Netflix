@@ -1,10 +1,21 @@
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div className='fixed flex justify-between w-full h-14 p-5 bg-black'>
-      <img className='fixed left-2 w-20' src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/1920px-Netflix_2015_logo.svg.png' alt="Logo" />
-      <img className='fixed right-2 w-8' src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="Avatar" />
+    <div className="absolute w-full p-4 flex items-center justify-between z-50">
+        <Link to="/">
+            <h1 className="text-red-600 font-nsans-bold cursor-pointer text-5xl">NETFLIX</h1>
+        </Link>
+        <div>
+            <Link to="/login">
+                <button className="pr-4">Login</button>
+            </Link>
+            <Link to="signup">
+                <button className="px-6 py-2 rounded cursor-pointer bg-red-600">Signup</button>
+            </Link>
+        </div>
     </div>
+
   )
 }
 

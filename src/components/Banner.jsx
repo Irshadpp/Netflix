@@ -1,17 +1,51 @@
+import { useEffect, useState } from "react"
+import axios from 'axios';
+import endpoints, { createImageUrl } from "../services/movieServices";
 
 function Banner() {
+    const [movie,setMovie] = useState({});
+    useEffect(()=>{
+        axios.get(endpoints.popular).then((response)=>{
+            const movie = response.data.results;
+            const randomMovie = movie[Math.floor(Math.random() * movie.length)];
+            setMovie(randomMovie);
+        })
+    },[])
+    
+    const truncate = (str, length) =>{
+        if(!str) return "";
+        return str.length > length ? str.slice(0, length) + "..." : str;
+    }
+
+    if(Object.keys(movie).length === 0) return (
+        <>
+        <p>Fetching movie</p>
+        </>
+    )
+
+    const {title, backdrop_path, release_date, overview} = movie;
+
   return (
-    <div className="bg-[url('https://wallpaperaccess.com/full/2703652.png')]  text-white bg-cover">
-      <div className="pt-[140px] h-[190px] pl-5">
-        <h1 className="text-3xl font-extrabold pb-[0.3rem]">Movie Name</h1>
-        <div >
-            <button className="bg-custom-gray mr-3 text-white outline-none border-none font-bold rounded-md px-[2rem] py-[0.5rem] cursor-pointer hover:text-black hover:bg-[#e6e6e6]" >Play</button>
-            <button className="bg-custom-gray mr-3 text-white outline-none border-none font-bold rounded-md px-[2rem] py-[0.5rem] cursor-pointer hover:text-black hover:bg-[#e6e6e6]">My List</button>
+    <div className="w-full h-[550px] lg:h-[850px]">
+        <div className="w-full h-full">
+    <div className="absolute w-full h-[550px] lg:h-[850px] bg-gradient-to-r from-black">
+      <img
+        className="w-full h-full object-cover object-top"
+        src={createImageUrl(backdrop_path, "original")}
+        alt={title}
+      />
+      <div className="absolute w-full top[10%] lg:top-[25%] p-4 md:p-8">
+        <h1 className="text-3xl md:text-6xl font-nsans-bold">{title}</h1>
+        <div className="mt-8 mb-4">
+            <button className="border bg-gray-300 text-white py-2 px-5 rounded-sm">Play</button>
+            <button className="border border-grey-300 py-2 px-5 ml-4 rounded-sm">Watch Later</button>
         </div>
-        <h1 className="w-[45rem] pt-5 leading-6 text-base h-[80px] max-2-[360px]">fajsdfkad adsjfaklds fadsjflkads fasdjfkladsjfklads fjasdlf jadslkfjasdlkfjasdljf fakl</h1>
+        <p className="text-gray-400 text-sm">{release_date}</p>
+        <p className="w-full md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%] text-grey-200">{truncate(overview, 165)}</p>
       </div>
-      <div className="bg-custom-gradient h-[313px]"></div>
     </div>
+    </div>
+  </div>
   )
 }
 

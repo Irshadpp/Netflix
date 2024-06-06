@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import plugin from 'tailwindcss/plugin'
-import scrollbar from 'tailwindcss-scrollbar'
+import scrollbar from 'tailwind-scrollbar-hide'
 export default {
   content: [
     "./index.html",
@@ -9,22 +8,15 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'system': ['-apple-system'],
-      },
-      backgroundImage: {
-        'custom-gradient': 'linear-gradient(180deg, transparent, rgba(37, 37, 37, 0.61), #111)',
+        'nsans-light': ['Nsans Light'],
+        'nsans-bold': ['Nsans Bold'],
+        'nsans-medium': ['Nsans Medium'],
+        'nsans-regular': ['Nsans Regular'],
       },
     },
   },
   plugins: [
     scrollbar,
-    plugin(function({ addBase, theme }) {
-      addBase({
-        'h1': { fontSize: theme('fontSize.2xl') },
-        'h2': { fontSize: theme('fontSize.xl') },
-        'h3': { fontSize: theme('fontSize.lg') },
-      })
-    })
   ],
 }
 
