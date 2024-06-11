@@ -8,12 +8,14 @@ import Signup from "./pages/Signup"
 import Profile from "./pages/Profile"
 import Test from "./pages/Test"
 import { AuthContextProvider } from "./context/AuthContext"
+import { TrailerContextProvider } from './context/TrailerContext'
 import ProtectedRoute from "./components/ProtectedRoute"
 
 function App() {
   return (
     <>
     <AuthContextProvider>
+    <TrailerContextProvider>
     <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
@@ -24,6 +26,7 @@ function App() {
           }/>
         <Route path="/test" element={<Test/>}/>
       </Routes>
+      </TrailerContextProvider>
       </AuthContextProvider>
     </>
   )

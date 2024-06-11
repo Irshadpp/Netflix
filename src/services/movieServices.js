@@ -13,4 +13,12 @@ export const createImageUrl = (filename, size) =>{
     return `https://image.tmdb.org/t/p/${size}/${filename}`
 }
 
+export const API_OPTIONS = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTM1MWEzYzY0NjQ1ODZmNjdmNzEzY2ZjZmQyZjBlZSIsInN1YiI6IjY2NjE0YWNlZTFiNjk3MjM0ZDAwYmQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j9oUqdivsdpY-lf1GMVqdAaaw89eMNyYs-0J2UqAxRg'
+    }
+  };
+
 export default endpoints;

@@ -1,16 +1,31 @@
 import { useEffect, useState } from "react"
 import axios from 'axios';
-import endpoints, { createImageUrl } from "../services/movieServices";
+import endpoints, { API_OPTIONS, createImageUrl } from "../services/movieServices";
+import {MovieTrailer,} from '../context/TrailerContext'
 
 function Banner() {
-    const [movie,setMovie] = useState({});
+    const {movie, setMovie, trailer, setTrailer} = MovieTrailer();
     useEffect(()=>{
         axios.get(endpoints.popular).then((response)=>{
             const movie = response.data.results;
             const randomMovie = movie[Math.floor(Math.random() * movie.length)];
             setMovie(randomMovie);
-        })
-    },[])
+        });
+        },[])
+        
+        useEffect(() => {
+          const getMovieVideos = async () => {
+              if (movie.id) {
+                  const data = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos`, API_OPTIONS);
+                  const json = await data.json();
+                  const filteredData = json.results.filter(item => item.type === "Trailer");
+                  const trailerData = filteredData.length ? filteredData[0] : json.results[0];
+                  setTrailer(trailerData);
+              }
+          };
+          getMovieVideos();
+      }, [movie]); 
+        
     
     const truncate = (str, length) =>{
         if(!str) return "";
@@ -26,14 +41,29 @@ function Banner() {
     const {title, backdrop_path, release_date, overview} = movie;
 
   return (
-    <div className="w-full h-[550px] lg:h-[850px]">
+    <div className="w-full h-[550px] lg:h-[550px]">
         <div className="w-full h-full">
     <div className="absolute w-full h-[550px] lg:h-[850px] bg-gradient-to-r from-black">
-      <img
+     
+      {
+        trailer ? (
+          <iframe
+        className='w-screen h-[620px]'
+        src={`https://www.youtube.com/embed/${trailer?.key ? trailer.key : ''}?autoplay=1&mute=1`}
+        allow='autoplay; encrypted-media'
+        title="YouTube video player"
+        frameBorder="0"
+        allowFullScreen
+    ></iframe>
+        ) : (
+            <img
         className="w-full h-full object-cover object-top"
         src={createImageUrl(backdrop_path, "original")}
         alt={title}
-      />
+      /> 
+        )
+      }
+      
       <div className="absolute w-full top[10%] lg:top-[25%] p-4 md:p-8">
         <h1 className="text-3xl md:text-6xl font-nsans-bold">{title}</h1>
         <div className="mt-8 mb-4">
