@@ -1,8 +1,8 @@
 import {MdChevronLeft,MdChevronRight} from 'react-icons/md';
 import {AiOutlineClose} from 'react-icons/ai';
 import { UserAuth } from '../context/AuthContext';
-import { db } from '../services/firebase';
-import { createImageUrl } from '../services/movieServices';
+import { db } from '../util/firebase';
+import { createImageUrl } from '../util/movieServices';
 import {arrayRemove,doc,onSnapshot,updateDoc} from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 

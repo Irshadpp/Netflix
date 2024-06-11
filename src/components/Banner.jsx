@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from 'axios';
-import endpoints, { API_OPTIONS, createImageUrl } from "../services/movieServices";
+import endpoints, { API_OPTIONS, createImageUrl } from "../util/movieServices";
 import {MovieTrailer,} from '../context/TrailerContext'
 
 function Banner() {
@@ -41,7 +41,7 @@ function Banner() {
     const {title, backdrop_path, release_date, overview} = movie;
 
   return (
-    <div className="w-full h-[550px] lg:h-[550px]">
+    <div className="w-full h-[550px] lg:h-[600px]">
         <div className="w-full h-full">
     <div className="absolute w-full h-[550px] lg:h-[850px] bg-gradient-to-r from-black">
      

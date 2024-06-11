@@ -1,13 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, } from 'firebase/auth';
-import {auth, db} from '../services/firebase';
+import {auth, db} from '../util/firebase';
 import {doc, setDoc} from 'firebase/firestore'
+import { getErrorMessage } from "../util/errorMessages";
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({children}) =>{
 
     const [user,setUser] = useState({});
+    // const [errorMessage, setErrorMessage] = useState();
 
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, (currentuser) =>{
@@ -19,15 +21,24 @@ export const AuthContextProvider = ({children}) =>{
         }
     },[])
 
-    function signUp(email, password){
-       createUserWithEmailAndPassword(auth, email, password);
-       setDoc(doc(db, "users", email),{
-        favMovies: [],
+     const signUp = async (email, password) => {
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db, "users", email),{
+            favMovies: [],
        })
+        } catch (error) {
+            throw new Error(getErrorMessage(error.code));
+        }
+       
     }
 
-    function logIn(email, password){
-        return signInWithEmailAndPassword(auth, email, password);
+    async function logIn(email, password){
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            throw new Error(getErrorMessage(error.code));
+        }
     }
 
     function logOut(){

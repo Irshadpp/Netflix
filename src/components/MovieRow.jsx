@@ -20,7 +20,7 @@ function MovieRow({title, url}) {
 
   return (
     <>
-     <h2 className='font-nsans-bold md:text-xl p-4'>{title}</h2>
+     <h2 className='font-nsans-bold md:text-xl relative text-white p-4'>{title}</h2>
      <div className="relative flex items-center group">
       <MdChevronLeft
       onClick={()=>slider(-500)}

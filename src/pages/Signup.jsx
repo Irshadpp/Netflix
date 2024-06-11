@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { UserAuth } from "../context/AuthContext";
+import { validateSignupForm } from "../util/validation";
 
 function Signup() {
   const [rememberLogin, setRememberLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
 
   const {user, signUp} = UserAuth();
   const navigate = useNavigate();
@@ -13,10 +15,14 @@ function Signup() {
   const handleFormSubmit = async (e) =>{
     e.preventDefault();
     try {
+      const validate = validateSignupForm(email, password);
+      if(validate){
+        setErrorMessage(validate)
+      }
       await signUp(email, password);
-      navigate('/')
+       navigate('/')
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error.message)
     }
   }
 
@@ -42,6 +48,7 @@ function Signup() {
             <input className="p-3 my-2 bg-gray-700 rounded" type="password" placeholder="password" autoComplete="current-password"
             value={password}
             onChange={(e)=>setPassword(e.target.value)}/>
+            {errorMessage && <p className="text-red-600">{errorMessage}</p> }
             <button className="bg-red-600 py-3 my-6 rounded font-nsans-bold">Signup</button>
             <div className="flex justify-between items-center text-gray-600">
               <p>

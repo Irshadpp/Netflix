@@ -8,6 +8,7 @@ function Login(){
 const [rememberLogin, setRememberLogin] = useState(true);
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("")
+const [errorMessage, setErrorMessage] = useState();
 const {logIn} = UserAuth();
 const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const handleFormSubmit = async (e) => {
     await logIn(email, password);
     navigate('/')
   } catch (error) {
-    console.log(error)
+    setErrorMessage(error.message)
   }
 }
 
@@ -43,6 +44,7 @@ return (
           <input className="p-3 my-2 bg-gray-700 rounded" type="password" placeholder="password" autoComplete="current-password"
           value={password}
           onChange={(e)=>setPassword(e.target.value)}/>
+          {errorMessage && <p className="text-red-600">{errorMessage}</p> }
           <button className="bg-red-600 py-3 my-6 rounded font-nsans-bold">Login</button>
           <div className="flex justify-between items-center text-gray-600">
             <p>

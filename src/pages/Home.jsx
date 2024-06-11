@@ -1,6 +1,6 @@
 import Banner from "../components/Banner"
 import MovieRow from "../components/MovieRow"
-import endpoints from "../services/movieServices"
+import endpoints from "../util/movieServices"
 
 function Home() {
   return (
