@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import MovieCard from './MovieCard';
 import {MdChevronLeft, MdChevronRight} from 'react-icons/md'
+import ShimmerMovieRow from './ShimmerMovieRow';
 
 function MovieRow({title, url}) {
   const rowId = Math.floor(Math.random() * 1000);
@@ -16,6 +17,14 @@ function MovieRow({title, url}) {
   const slider = (offset) =>{
     const slider = document.getElementById('slider' + rowId);
     slider.scrollLeft = slider.scrollLeft + offset;
+  }
+
+  if(movie.length === 0){
+    return(
+      <>
+      <ShimmerMovieRow/>
+      </>
+    )
   }
 
   return (

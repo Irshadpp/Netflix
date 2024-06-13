@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import axios from 'axios';
 import endpoints, { API_OPTIONS, createImageUrl } from "../util/movieServices";
 import {MovieTrailer,} from '../context/TrailerContext'
+import ShimmerBanner from "./ShimmerBanner";
 
 function Banner() {
     const {movie, setMovie, trailer, setTrailer} = MovieTrailer();
@@ -32,18 +33,16 @@ function Banner() {
         return str.length > length ? str.slice(0, length) + "..." : str;
     }
 
-    if(Object.keys(movie).length === 0) return (
-        <>
-        <p>Fetching movie</p>
-        </>
-    )
+    if(Object.keys(trailer).length === 0)  return (
+      <ShimmerBanner/>
+    );
 
     const {title, backdrop_path, release_date, overview} = movie;
 
   return (
-    <div className="w-full h-[550px] lg:h-[600px]">
+    <div className="w-full h-[550px] lg:h-[600px] relative overflow-hidden">
         <div className="w-full h-full">
-    <div className="absolute w-full h-[550px] lg:h-[850px] bg-gradient-to-r from-black">
+    <div className="absolute w-full h-[550px] lg:h-[850px] bg-gradient-to-r  from-black">
      
       {
         trailer ? (
